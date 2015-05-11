@@ -1,74 +1,100 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="css/screen.css">
+<script src="js/jquery.js"></script>
+<script src="js/jquery.validate.js"></script>
+<script type="text/javascript">
+	$().ready(function() {
+		$("#registerform").validate({
+			rules : {
+				username : {
+					required : true,
+					rangelength : [ 2, 15 ]
+				},
+				userpassword : {
+					required : true,
+					rangelength : [ 5, 25 ]
+				},
+				userrepassword : {
+					required : true,
+					equalTo: "#userpassword"
+				},
+
+				
+			},
+			messages : {
+				username : {
+					required : "用户名不能为空",
+					rangelength : jQuery.validator.format("请输入 一个长度介于 {0} 和 {1} 之间的用户名"),
+				},
+				userpassword : {
+					required : "密码不能为空",
+					rangelength : jQuery.validator.format("请输入 一个长度介于 {0} 和 {1} 之间的密码"),
+				},
+				userrepassword : {
+					required : "重填密码不能为空",
+					equalTo : "密码不同，请重新输入",
+				},
+			}
+		});
+	});
+</script>
+<style>
+#commentForm {
+	width: 500px;
+}
+
+#commentForm label {
+	width: 250px;
+}
+
+#commentForm label.error, #commentForm input.submit {
+	margin-left: 253px;
+}
+
+#signupForm {
+	width: 670px;
+}
+
+#signupForm label.error {
+	margin-left: 10px;
+	width: auto;
+	display: inline;
+}
+
+#newsletter_topics label.error {
+	display: none;
+	margin-left: 103px;
+}
+</style>
 </head>
 <body>
-	<form id="form" name="form" method="post" action="success.html"
-		onSubmit="return on_submit()">
+	<form id="registerform" name="registerform" method="post" action="/ZhuNewsManager/register">
 		<table width="600" border="0" align="center" class="b">
 			<tr>
 				<td colspan="2" align="center"><h1>新用户注册</h1></td>
 			</tr>
 			<tr>
 				<td width="167" align="right">用户名(<font color="red">*</font>)：</td>
-				<td><input name="username" type="text" id="username" size="25"
-					class="text_box"></td>
+				<td><input name="username" type="text" id="username" size="25"></td>
 			</tr>
 			<tr>
 				<td align="right">密码(<font color="red">*</font>)：</td>
-				<td><input name="userpsd" type="password" id="userpsd"
-					size="25" class="text_box"></td>
+				<td><input name="userpassword" type="password" id="userpassword" size="25"></td>
 			</tr>
 			<tr>
 				<td align="right">确认密码(<font color="red">*</font>)：</td>
-				<td><input name="repsd" type="password" id="repsd" size="25"
-					class="text_box"></td>
-			</tr>
-			<tr>
-				<td align="right">性别：</td>
-				<td><p>
-						<input type="radio" name="sex" value="单选" id="sex_0"> 男 <input
-							type="radio" name="sex" value="单选" id="sex_1"> 女
-					</p></td>
-			</tr>
-			<tr>
-				<td align="right">出生年月：</td>
-				<td><input name="year" type="text" id="year" size="4"
-					maxlength="4" class="text_box"> 年 <select name="month"
-					id="month">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-						<option>5</option>
-						<option>6</option>
-						<option>7</option>
-						<option>8</option>
-						<option>9</option>
-						<option>10</option>
-						<option>11</option>
-						<option>12</option>
-				</select> 月 <input name="data" type="text" id="data" size="5" maxlength="2"
-					class="text_box"></td>
-			</tr>
-			<tr>
-				<td align="right">电子邮箱(<font color="red">*</font>)：</td>
-				<td><input name="email" type="text" id="email" size="25"
-					class="text_box"></td>
-			</tr>
-			<tr>
-				<td align="right">家庭地址：</td>
-				<td><input name="adr" type="text" id="adr" size="25"
-					class="text_box"></td>
+				<td><input name="userrepassword" type="password" id="userrepassword" size="25"></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td><input type="submit" name="submit" id="send" value="确认提交">
-					<input type="submit" name="reset" id="reset" value="全部重写">
+					<input type="reset" name="reset" id="reset" value="全部重写">
 				</td>
 			</tr>
 		</table>
