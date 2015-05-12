@@ -79,20 +79,30 @@
     <servlet-name>Register</servlet-name>
     <url-pattern>/register</url-pattern>
   </servlet-mapping>
-  <filter>  
-      <filter-name>filter</filter-name>  
-      <filter-class>com.pczhu.filter.NesFilter</filter-class>  
-      <init-param>  
-          <param-name>charset</param-name>  
-          <param-value>UTF-8</param-value>  
-      </init-param>  
-      <init-param>  
-          <param-name>contentType</param-name>  
-          <param-value>text/html;charset=UTF-8</param-value>  
-      </init-param>  
-  </filter>  
-  <filter-mapping>  
-      <filter-name>filter</filter-name>  
-      <url-pattern>/*</url-pattern>  
-  </filter-mapping> 
+  <filter>
+    <filter-name>filter</filter-name>
+    <filter-class>com.pczhu.filter.NesFilter</filter-class>
+    <init-param>
+      <param-name>charset</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>contentType</param-name>
+      <param-value>text/html;charset=UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Login</display-name>
+    <servlet-name>Login</servlet-name>
+    <servlet-class>com.pczhu.servlet.Login</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
 </web-app>
