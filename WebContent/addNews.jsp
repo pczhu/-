@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,59 +10,67 @@
 <script src="js/jquery.js"></script>
 <script src="js/jquery.validate.js"></script>
 <script type="text/javascript">
-	$().ready(function() {
-		$("#addnewsform").validate({
-			rules : {
-				newstitle : {
-					required : true,
-					rangelength : [ 2, 15 ]
-				},
-				newsdesc : {
-					required : true,
-					rangelength : [ 5, 25 ]
-				},
-				newscontent : {
-					required : true,
-					minlength : 15,
-				},
+	$()
+			.ready(
+					function() {
+						$("#addnewsform")
+								.validate(
+										{
+											rules : {
+												newstitle : {
+													required : true,
+													rangelength : [ 2, 15 ]
+												},
+												newsdesc : {
+													required : true,
+													rangelength : [ 5, 25 ]
+												},
+												newscontent : {
+													required : true,
+													minlength : 15,
+												},
 
-				newswriter : {
-					required : true,
-					minlength : 2
-				},
-				newsimgurl : "required",
-				newscontentimgurl : "required",
-				
-				newsusername : "required",
-				userpassword : "required",
-				
-			},
-			messages : {
-				newstitle : {
-					required : "新闻标题不能为空",
-					rangelength : jQuery.validator.format("请输入 一个长度介于 {0} 和 {1} 之间的字符串"),
-				},
-				newsdesc : {
-					required : "简介不能为空",
-					rangelength : jQuery.validator.format("请输入 一个长度介于 {0} 和 {1} 之间的字符串"),
-				},
-				newscontent : {
-					required : "新闻内容不能为空",
-					minlength : jQuery.validator.format("请输入 一个最小长度不小于{0}的字符串"),
-				},
+												newswriter : {
+													required : true,
+													minlength : 2
+												},
+												newsimgurl : "required",
+												newscontentimgurl : "required",
 
-				newswriter : {
-					required : "新闻作者不能为空",
-					minlength : jQuery.validator.format("请输入 一个最小长度不小于{0}的字符串"),
-				},
-				newsimgurl : "缩略图不能为空",
-				newscontentimgurl : "内容图不能为空",
-				
-				newsusername : "管理员账户不能为空",
-				userpassword : "不能为空",
-			}
-		});
-	});
+												newsusername : "required",
+												userpassword : "required",
+
+											},
+											messages : {
+												newstitle : {
+													required : "新闻标题不能为空",
+													rangelength : jQuery.validator
+															.format("请输入 一个长度介于 {0} 和 {1} 之间的字符串"),
+												},
+												newsdesc : {
+													required : "简介不能为空",
+													rangelength : jQuery.validator
+															.format("请输入 一个长度介于 {0} 和 {1} 之间的字符串"),
+												},
+												newscontent : {
+													required : "新闻内容不能为空",
+													minlength : jQuery.validator
+															.format("请输入 一个最小长度不小于{0}的字符串"),
+												},
+
+												newswriter : {
+													required : "新闻作者不能为空",
+													minlength : jQuery.validator
+															.format("请输入 一个最小长度不小于{0}的字符串"),
+												},
+												newsimgurl : "缩略图不能为空",
+												newscontentimgurl : "内容图不能为空",
+
+												newsusername : "管理员账户不能为空",
+												userpassword : "不能为空",
+											}
+										});
+					});
 </script>
 <style>
 #commentForm {
@@ -93,8 +102,11 @@
 </style>
 </head>
 <body>
-
-
+	<c:if test="${sessionScope.logininfo!= null}">
+			${sessionScope.logininfo.userName}
+		<a href="/ZhuNewsManager/logout">退出</a>
+		<a href="/ZhuNewsManager/welcome.jsp">首页</a>
+	</c:if>
 	<form method="POST" action="/ZhuNewsManager/addNews"
 		enctype="application/form-data" id="addnewsform">
 		<table>

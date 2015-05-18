@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pczhu.bean.NewsBean;
+import com.pczhu.bean.UserBean;
+import com.pczhu.dao.UserDaoInterface;
+import com.pczhu.dao.impl.UserDaoImpl;
 import com.pczhu.service.NewsDataControl;
+import com.pczhu.utils.TimeUtils;
 
 /**
  * Servlet implementation class AddNews
@@ -19,6 +23,8 @@ public class AddNews extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PrintWriter out;
 	private NewsDataControl newsdatacontrol;
+	private boolean flag;
+	private UserBean userbean;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -43,17 +49,27 @@ public class AddNews extends HttpServlet {
 	    response.setContentType("text/html;charset=utf-8");
 		out = response.getWriter();
 		
-		NewsBean news = receivedata(request,response);
-		
-		
 		
 		
 		newsdatacontrol = new NewsDataControl();
-		boolean flag = newsdatacontrol.addNews(news);
+		
+		String username = request.getParameter("newsusername");
+		String userpassword = request.getParameter("userpassword");
+		UserDaoInterface userDaoInterface = new UserDaoImpl();
+		userbean = userDaoInterface.getVaildUser(username, userpassword);
+		NewsBean news = receivedata(request,response);
+		if(userbean!=null){
+			flag = newsdatacontrol.addNews(news);
+			
+		}else{
+			flag = false;
+		}
+		
+		
 		if(!flag){
 			response.sendRedirect("failed.jsp");
 		}else{
-			response.sendRedirect("welcome.jsp");
+			response.sendRedirect("success.jsp");
 		}
 	}
 
@@ -68,9 +84,9 @@ public class AddNews extends HttpServlet {
 		String newsimgurl = request.getParameter("newsimgurl");
 		String newscontentimgurl = request.getParameter("newscontentimgurl");
 		String newsuserName = request.getParameter("newsusername");
-		String userPassword = request.getParameter("userpassword");
+	    String userPassword = request.getParameter("userpassword");
 		String newssource = request.getParameter("newssource");
-		
+		String newsuserid = userbean.getUserid()+"";
 		System.out.println(newstitle+":"+newsdesc+":"+newscontent+":"+newsclassTag+":"+newswriter+":"+newstitle+":"+newsimgurl+":"+newscontentimgurl+":"+newsuserName+":"+newssource+"userPassword");
 		NewsBean news = new NewsBean();
 		news.setNewscontent(newscontent);
@@ -80,15 +96,14 @@ public class AddNews extends HttpServlet {
 		news.setNewsdesc(newsdesc);
 		news.setNewswriter(newswriter);
 		news.setNewssource(newssource);
-		Date date = new Date();
-		long l = date.getTime();
-		news.setNewsdateTime(l+"");
+		news.setNewsdateTime(TimeUtils.getFormatTime("yyyy-MM-dd HH:mm:ss"));
 		news.setNewscheckup(0);
 		news.setNewsshow(0);
 		news.setNewslight(0);
 		news.setNewsimgurl(newsimgurl);
 		news.setNewscontentimgurl(newscontentimgurl);
 		news.setNewsuserName(newsuserName);
+		news.setNewsUserID(newsuserid);
 		return news;
 	}
 

@@ -46,7 +46,7 @@ public class GetNewsListServlet extends HttpServlet {
 		
 		JSONObject jsonObject = new JSONObject();  
 		jsonObject.put("resultCode", 200); 
-        jsonObject.put("resultMessage", "³É¹¦"); 
+        jsonObject.put("resultMessage", "æˆåŠŸ"); 
         jsonObject.put("items", newslist); 
 		
 

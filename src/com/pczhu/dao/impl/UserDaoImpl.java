@@ -2,8 +2,10 @@ package com.pczhu.dao.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.pczhu.bean.NewsBean;
@@ -11,16 +13,17 @@ import com.pczhu.bean.UserBean;
 import com.pczhu.dao.DBPool;
 import com.pczhu.dao.UserDaoInterface;
 
+
 public class UserDaoImpl implements UserDaoInterface {
 	private Connection conn;
 	@Override
 	public boolean register(UserBean user) {
 		conn = DBPool.getConnection();  
-//		userid	int(8)			·ñ		auto_increment	 Browse distinct values	 ¸ü¸Ä	 É¾³ý	 Ö÷¼ü	 Î¨Ò»	 Ë÷Òý	È«ÎÄËÑË÷
-//		userName	varchar(64)	utf8_general_ci		·ñ			 Browse distinct values	 ¸ü¸Ä	 É¾³ý	 Ö÷¼ü	 Î¨Ò»	 Ë÷Òý	È«ÎÄËÑË÷
-//		userPassword	varchar(200)	utf8_general_ci		·ñ			 Browse distinct values	 ¸ü¸Ä	 É¾³ý	 Ö÷¼ü	 Î¨Ò»	 Ë÷Òý	È«ÎÄËÑË÷
-//		registerTime	varchar(12)	utf8_general_ci		·ñ			 Browse distinct values	 ¸ü¸Ä	 É¾³ý	 Ö÷¼ü	 Î¨Ò»	 Ë÷Òý	È«ÎÄËÑË÷
-//		uuid	varchar(64)	utf8_general_ci		·ñ			 Browse distinct values	 ¸ü¸Ä	 É¾³ý	 Ö÷¼ü	 Î¨Ò»	 Ë÷Òý	È«ÎÄËÑË÷
+//		userid	int(8)			ï¿½ï¿½		auto_increment	 Browse distinct values	 ï¿½ï¿½ï¿½	 É¾ï¿½ï¿½	 ï¿½ï¿½ï¿½ï¿½	 Î¨Ò»	 ï¿½ï¿½ï¿½ï¿½	È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//		userName	varchar(64)	utf8_general_ci		ï¿½ï¿½			 Browse distinct values	 ï¿½ï¿½ï¿½	 É¾ï¿½ï¿½	 ï¿½ï¿½ï¿½ï¿½	 Î¨Ò»	 ï¿½ï¿½ï¿½ï¿½	È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//		userPassword	varchar(200)	utf8_general_ci		ï¿½ï¿½			 Browse distinct values	 ï¿½ï¿½ï¿½	 É¾ï¿½ï¿½	 ï¿½ï¿½ï¿½ï¿½	 Î¨Ò»	 ï¿½ï¿½ï¿½ï¿½	È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//		registerTime	varchar(12)	utf8_general_ci		ï¿½ï¿½			 Browse distinct values	 ï¿½ï¿½ï¿½	 É¾ï¿½ï¿½	 ï¿½ï¿½ï¿½ï¿½	 Î¨Ò»	 ï¿½ï¿½ï¿½ï¿½	È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//		uuid	varchar(64)	utf8_general_ci		ï¿½ï¿½			 Browse distinct values	 ï¿½ï¿½ï¿½	 É¾ï¿½ï¿½	 ï¿½ï¿½ï¿½ï¿½	 Î¨Ò»	 ï¿½ï¿½ï¿½ï¿½	È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //		userPower
 	    QueryRunner queryRunner = new QueryRunner();  
 	    int i = 0;
@@ -34,6 +37,7 @@ public class UserDaoImpl implements UserDaoInterface {
 					+ "values (?,?,?,?,?)",user.getUserName(),user.getUserPassword(),user.getRegisterTime(),user.getUuid(),user.getUserPower());
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 		
 		return i == 0 ? false:true;
@@ -41,12 +45,66 @@ public class UserDaoImpl implements UserDaoInterface {
 
 	@Override
 	public boolean checkVaildUser(String username, String userpassword) {
-		return false;
+		conn = DBPool.getConnection();  
+		  
+	    QueryRunner queryRunner = new QueryRunner();
+	    UserBean userbean = null;
+	    try {
+			userbean = queryRunner.query(conn, "select * from users where userName = ? and userPassword = ?", new BeanHandler<UserBean>(UserBean.class), username,userpassword);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	    if(userbean != null){
+	    	return true;
+	    }else{
+	    	return false;
+	    }
+		
+	}
+
+	@SuppressWarnings("finally")
+	@Override
+	public UserBean getVaildUser(String username, String userpassword) {
+		conn = DBPool.getConnection();  
+		  
+	    QueryRunner queryRunner = new QueryRunner();
+	    UserBean userbean = null;
+	    try {
+			userbean = queryRunner.query(conn, "select * from users where userName = ? and userPassword = ?", new BeanHandler<UserBean>(UserBean.class), username,userpassword);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			return userbean;
+		}
 	}
 
 	@Override
-	public UserBean getVaildUser(String username, String userpasword) {
-		return null;
+	public int delUser(String userid) {
+		int i = 0;
+		conn = DBPool.getConnection();  
+	    QueryRunner queryRunner = new QueryRunner();  
+		try {
+			i = queryRunner.update(conn,"delete from users where userid = ?", userid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return i;
+		}
+		return i;
+	}
+
+	@Override
+	public List<UserBean> showUserList() {
+		List<UserBean> allbeanListResult = null;
+		conn = DBPool.getConnection();  
+		  
+	    QueryRunner queryRunner = new QueryRunner();  
+		try {
+			allbeanListResult = queryRunner.query(conn,"select * from users", new BeanListHandler<UserBean>(UserBean.class));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return allbeanListResult;
 	}
 
 }

@@ -48,6 +48,10 @@ public class Register extends HttpServlet {
 			userbean.setUuid(MD5Utils.toMD5(userbean.getUserName()+userbean.getRegisterTime()));
 			RegisterControl registerControl = new RegisterControl();
 			boolean result = registerControl.register(userbean);
+			if(result){
+				response.sendRedirect("success.jsp");
+			}
+		}else{
 			
 		}
 		

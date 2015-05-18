@@ -1,7 +1,7 @@
 package com.pczhu.servlet;
 
 import java.io.IOException;
-import java.net.HttpCookie;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,19 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pczhu.bean.UserBean;
-import com.pczhu.service.LoginControl;
-import com.sun.net.httpserver.HttpContext;
+import com.pczhu.dao.UserDaoInterface;
+import com.pczhu.service.UserControl;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class ShowUsers
  */
-public class Login extends HttpServlet {
+public class ShowUsers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private LoginControl loginControl;
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public ShowUsers() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,27 +30,19 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("username");
-		String userpassword = request.getParameter("userpassword");
-		loginControl = new LoginControl();
-		if(username!=null && userpassword!=null){
-			UserBean userinfo = loginControl.getUserInfo(username, userpassword);
-			if(userinfo != null){
-				request.getSession().removeAttribute("loginerror");
-				request.getSession().setAttribute("logininfo", userinfo);
-				response.sendRedirect("welcome.jsp");
-			}else{
-				request.getSession().setAttribute("loginerror", "登陆信息错误，请重新登陆");
-				response.sendRedirect("login.jsp");
-			}
-			
+		UserControl usercontrol = new UserControl();
+		List<UserBean> userList = usercontrol.getUserList();
+		if(userList!=null){
+			request.getSession().setAttribute("userlist", userList);
 		}
+		response.sendRedirect("showusers.jsp");
 	}
 
 }

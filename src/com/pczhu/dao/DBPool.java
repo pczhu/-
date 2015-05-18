@@ -25,13 +25,7 @@ public class DBPool {
 
 	}
 
-	/**
-	 * ×ÊÔ´¹Ø±Õ
-	 * 
-	 * @param rs
-	 * @param stmt
-	 * @param conn
-	 */
+
 	public static void close(ResultSet rs, Statement stmt, Connection conn) {
 		if (rs != null) {
 			try {

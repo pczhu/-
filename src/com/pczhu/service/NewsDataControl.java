@@ -26,4 +26,14 @@ public class NewsDataControl {
 			return false;
 		}
 	}
+	public List<NewsBean> getAllNews(){
+		
+		return newsdao.getAllNewsInfo();
+	}
+	public int deleteNews(String id){
+		return newsdao.delNewsInfo(id);
+	}
+	public int canshow(Map<String,String> tag,String newsid){
+		return newsdao.updateNews(tag, newsid);
+	}
 }

@@ -13,44 +13,58 @@ import com.pczhu.bean.NewsBean;
 import com.pczhu.dao.DBPool;
 import com.pczhu.dao.NewsDaoInterface;
 /*
- * dbutilsÖ§³Ö·µ»ØÒÔÏÂÀàÐÍµÄ½á¹û£º
- ¡¡¡¡ArrayHandler £º½«½á¹û¼¯ÖÐµÚÒ»ÐÐµÄÊý¾Ý×ª»¯³É¶ÔÏóÊý×é¡£·µ»ØÖµÀàÐÍ£ºObject[]
-¡¡¡¡ ArrayListHandler½«½á¹û¼¯ÖÐËùÓÐµÄÊý¾Ý×ª»¯³ÉList¡£·µ»ØÖµÀàÐÍ£ºList<Object[]>
- ¡¡¡¡BeanHandler £º½«ObjectÖÐµÚÒ»ÐÐµÄÊý¾Ý×ª»¯³ÉÀà¶ÔÏó¡£·µ»ØÖµÀàÐÍ£ºT
- ¡¡¡¡BeanListHandler £º½«ObjectÖÐËùÓÐµÄÊý¾Ý×ª»¯³ÉList£¬ListÖÐ´æ·ÅµÄÊÇÀà¶ÔÏó¡£·µ»ØÖµÀàÐÍ£ºList<T>
- ¡¡¡¡ColumnListHandler £º½«ObjectÖÐÄ³Ò»ÁÐµÄÊý¾Ý´æ³ÉList£¬ListÖÐ´æ·ÅµÄÊÇ Object¶ÔÏó¡£·µ»ØÖµÀàÐÍ£ºList<Object>
- ¡¡¡¡KeyedHandler £º½«ObjectÖÐ´æ³ÉÓ³Éä£¬keyÎªÄ³Ò»ÁÐ¶ÔÓ¦ÎªMap¡£MapÖÐ´æ·ÅµÄÊÇÊý¾Ý¡£Map<¹Ø¼ü×Ö×Ö¶ÎÖµ£¬map<ÁÐÃû,×Ö¶ÎÖµ>>·µ»ØÖµÀàÐÍ£ºMap<Object,Map<String,Object>>
- ¡¡¡¡MapHandler £º½«½á¹û¼¯ÖÐµÚÒ»ÐÐµÄÊý¾Ý´æ³ÉMap<ÁÐÃû,×Ö¶ÎÖµ>Ó³Éä¡£·µ»ØÖµÀàÐÍ£ºMap<String,Object>
- ¡¡¡¡MapListHandler £º½«½á¹û¼¯ÖÐËùÓÐµÄÊý¾Ý´æ³ÉList¡£ListÖÐ´æ·ÅµÄÊÇMap<ÁÐÃû,×Ö¶ÎÖµ>¡£·µ»ØÖµÀàÐÍ£ºList<Map<String,Object>>
- ¡¡¡¡ScalarHandler £º·µ»Ø½á¹û¼¯ÖÐµÄµÚÒ»ÐÐµÄÖ¸¶¨ÁÐµÄÒ»¸öÖµ¡£·µ»ØÖµÀàÐÍ£ºObject
+ * dbutilsÖ§ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍµÄ½ï¿½ï¿½
+ ï¿½ï¿½ï¿½ï¿½ArrayHandler ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ò»ï¿½Ðµï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½É¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¡£ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Í£ï¿½Object[]
+ï¿½ï¿½ï¿½ï¿½ ArrayListHandlerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Listï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Í£ï¿½List<Object[]>
+ ï¿½ï¿½ï¿½ï¿½BeanHandler ï¿½ï¿½ï¿½ï¿½Objectï¿½Ðµï¿½Ò»ï¿½Ðµï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó¡£·ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Í£ï¿½T
+ ï¿½ï¿½ï¿½ï¿½BeanListHandler ï¿½ï¿½ï¿½ï¿½Objectï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Listï¿½ï¿½Listï¿½Ð´ï¿½Åµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó¡£·ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Í£ï¿½List<T>
+ ï¿½ï¿½ï¿½ï¿½ColumnListHandler ï¿½ï¿½ï¿½ï¿½Objectï¿½ï¿½Ä³Ò»ï¿½Ðµï¿½ï¿½ï¿½Ý´ï¿½ï¿½Listï¿½ï¿½Listï¿½Ð´ï¿½Åµï¿½ï¿½ï¿½ Objectï¿½ï¿½ï¿½ó¡£·ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Í£ï¿½List<Object>
+ ï¿½ï¿½ï¿½ï¿½KeyedHandler ï¿½ï¿½ï¿½ï¿½Objectï¿½Ð´ï¿½ï¿½Ó³ï¿½ä£¬keyÎªÄ³Ò»ï¿½Ð¶ï¿½Ó¦ÎªMapï¿½ï¿½Mapï¿½Ð´ï¿½Åµï¿½ï¿½ï¿½ï¿½ï¿½Ý¡ï¿½Map<ï¿½Ø¼ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½Öµï¿½ï¿½map<ï¿½ï¿½ï¿½ï¿½,ï¿½Ö¶ï¿½Öµ>>ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Í£ï¿½Map<Object,Map<String,Object>>
+ ï¿½ï¿½ï¿½ï¿½MapHandler ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ò»ï¿½Ðµï¿½ï¿½ï¿½Ý´ï¿½ï¿½Map<ï¿½ï¿½ï¿½ï¿½,ï¿½Ö¶ï¿½Öµ>Ó³ï¿½ä¡£ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Í£ï¿½Map<String,Object>
+ ï¿½ï¿½ï¿½ï¿½MapListHandler ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ý´ï¿½ï¿½Listï¿½ï¿½Listï¿½Ð´ï¿½Åµï¿½ï¿½ï¿½Map<ï¿½ï¿½ï¿½ï¿½,ï¿½Ö¶ï¿½Öµ>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Í£ï¿½List<Map<String,Object>>
+ ï¿½ï¿½ï¿½ï¿½ScalarHandler ï¿½ï¿½ï¿½ï¿½ï¿½Ø½ï¿½ï¿½ï¿½ÐµÄµï¿½Ò»ï¿½Ðµï¿½Ö¸ï¿½ï¿½ï¿½Ðµï¿½Ò»ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Í£ï¿½Object
  * @see com.pczhu.dao.NewsDaoInterface#getNewsList(java.util.Map)
  */
 public class NewsDaoImpl implements NewsDaoInterface {
 
     
 	private Connection conn;
+	
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<NewsBean> getNewsList(Map<String, String> tag) {
+		Iterator<String> iterator = tag.keySet().iterator();
+//		String value = tag.get(key);
 		List<NewsBean> beanListResult = null;
 		conn = DBPool.getConnection();  
 		  
 	    QueryRunner queryRunner = new QueryRunner();  
 		try {
-			beanListResult = queryRunner.query(conn,"select * from newsinfodata", new BeanListHandler<NewsBean>(NewsBean.class));
-		} catch (SQLException e) {
-			e.printStackTrace();
+				while(iterator.hasNext()){
+					String key = iterator.next();
+					String value = tag.get(key);
+					beanListResult = queryRunner.query(conn,"select * from newsinfodata where "+key+" = ?", new BeanListHandler<NewsBean>(NewsBean.class),value);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 		}
-
-		
-		
+	
 		return beanListResult;
 	}
 
 	@Override
-	public void delNewsInfo(int id) {
-
+	public int delNewsInfo(String id) {
+		int i = 0;
+		conn = DBPool.getConnection();  
+	    QueryRunner queryRunner = new QueryRunner();  
+		try {
+			i = queryRunner.update(conn,"delete from newsinfodata where newsid = ?", id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return i;
+		}
+		return i;
 	}
 
 	@Override
@@ -95,9 +109,41 @@ public class NewsDaoImpl implements NewsDaoInterface {
 		return i;
 	}
 
+
+
 	@Override
-	public void updateNews(int id, NewsBean bean) {
+	public List<NewsBean> getAllNewsInfo() {
+		List<NewsBean> allbeanListResult = null;
+		conn = DBPool.getConnection();  
+		  
+	    QueryRunner queryRunner = new QueryRunner();  
+		try {
+			allbeanListResult = queryRunner.query(conn,"select * from newsinfodata", new BeanListHandler<NewsBean>(NewsBean.class));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		return allbeanListResult;
+	}
+
+	@Override
+	public int updateNews(Map<String, String> tag, String newsid) {
+		Iterator<String> iterator = tag.keySet().iterator();
 		
+		int i = 0;
+		conn = DBPool.getConnection();  
+	    QueryRunner queryRunner = new QueryRunner();  
+		try {
+			while(iterator.hasNext()){
+				String key = iterator.next();
+				String value = tag.get(key);
+				i = queryRunner.update(conn,"update newsinfodata set "+key+" = ? where newsid = ?",value,newsid);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return i;
+		}
+		return i;
 	}
 
 

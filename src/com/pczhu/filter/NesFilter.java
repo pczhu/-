@@ -11,6 +11,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pczhu.bean.UserBean;
+import com.pczhu.dao.DBPool;
+import com.pczhu.dao.UserDaoInterface;
+import com.pczhu.dao.impl.UserDaoImpl;
+
 
 
 public class NesFilter implements Filter {
@@ -22,20 +27,20 @@ public class NesFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest arg0, ServletResponse arg1,
 			FilterChain chain) throws IOException, ServletException {
-		 // 强制类型转换  
         HttpServletRequest request = (HttpServletRequest) arg0;  
         HttpServletResponse response = (HttpServletResponse) arg1;  
-        // 获取web.xm设置的编码集，设置到Request、Response中  
         request.setCharacterEncoding(config.getInitParameter("charset"));  
         response.setContentType(config.getInitParameter("contentType"));  
         response.setCharacterEncoding(config.getInitParameter("charset"));  
-        // 将请求转发到目的地  
         
-        checkuser(request,response);
-        chain.doFilter(request, response);
+        if(checkuser(request,response)){
+        	chain.doFilter(request, response);
+        }else{
+        	request.getSession().setAttribute("error", "鏉冮檺閿欒");
+        }
 	}
 	
-	private void checkuser(HttpServletRequest request, HttpServletResponse response) {
+	private boolean checkuser(HttpServletRequest request, HttpServletResponse response) {
 		 String currentPath = request.getRequestURI();
 		 if("/ZhuNewsManager/register.jsp".equals(currentPath)){
 /*			 if(){
@@ -44,11 +49,23 @@ public class NesFilter implements Filter {
 				 
 			 }*/
 		 }
+
+		 if("/ZhuNewsManager/addNews.jsp".equals(currentPath)){
+			UserBean users = (UserBean) request.getSession().getAttribute("logininfo");
+			String username = users.getUserName();
+			String userpassword = users.getUserPassword();
+			UserDaoInterface userDaoInterface = new UserDaoImpl();
+			if(userDaoInterface.checkVaildUser(username, userpassword)){
+				return true;
+			}else{
+				return false;
+			}
+		 }
 		 System.out.println(currentPath);
+		 return true;
 	}
 	@Override
 	public void destroy() {
-		
 	}
 
 

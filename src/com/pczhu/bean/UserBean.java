@@ -1,16 +1,10 @@
 package com.pczhu.bean;
 
 import java.io.Serializable;
-/**
- * ”√ªß±Ì
- * @author Administrator
- *
- */
+
 public class UserBean implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private int userid;
 	private String userName;

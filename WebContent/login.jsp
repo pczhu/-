@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,15 +15,9 @@
 			rules : {
 				username : {
 					required : true,
-					rangelength : [ 2, 15 ]
 				},
 				userpassword : {
 					required : true,
-					rangelength : [ 5, 25 ]
-				},
-				userrepassword : {
-					required : true,
-					equalTo: "#userpassword"
 				},
 
 				
@@ -31,15 +25,9 @@
 			messages : {
 				username : {
 					required : "用户名不能为空",
-					rangelength : jQuery.validator.format("请输入 一个长度介于 {0} 和 {1} 之间的用户名"),
 				},
 				userpassword : {
 					required : "密码不能为空",
-					rangelength : jQuery.validator.format("请输入 一个长度介于 {0} 和 {1} 之间的密码"),
-				},
-				userrepassword : {
-					required : "重填密码不能为空",
-					equalTo : "密码不同，请重新输入",
 				},
 			}
 		});
@@ -75,11 +63,13 @@
 </style>
 </head>
 <body>
-	<a href="/ZhuNewsManager/welcome.jsp">返回</a>
-	<form id="registerform" name="registerform" method="post" action="/ZhuNewsManager/register">
+	<c:if test="${sessionScope.loginerror != null}">
+		${sessionScope.loginerror}
+	</c:if>
+	<form id="registerform" name="registerform" method="post" action="/ZhuNewsManager/login">
 		<table width="600" border="0" align="center" class="b">
 			<tr>
-				<td colspan="2" align="center"><h1>新用户注册</h1></td>
+				<td colspan="2" align="center"><h1>登陆</h1></td>
 			</tr>
 			<tr>
 				<td width="167" align="right">用户名(<font color="red">*</font>)：</td>
@@ -88,10 +78,6 @@
 			<tr>
 				<td align="right">密码(<font color="red">*</font>)：</td>
 				<td><input name="userpassword" type="password" id="userpassword" size="25"></td>
-			</tr>
-			<tr>
-				<td align="right">确认密码(<font color="red">*</font>)：</td>
-				<td><input name="userrepassword" type="password" id="userrepassword" size="25"></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>

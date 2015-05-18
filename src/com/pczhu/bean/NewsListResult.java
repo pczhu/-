@@ -2,10 +2,7 @@ package com.pczhu.bean;
 
 import java.util.List;
 
-/**
- * 
- *
- */
+
 public class NewsListResult{
 
 	private List<NewsBean> items;
