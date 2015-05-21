@@ -13,8 +13,11 @@ public interface NewsDaoInterface {
 
 	public int addNewsInfo(NewsBean news);
 
-	public List<NewsBean> getAllNewsInfo();
+	public List<NewsBean> getAllNewsInfo(String tag,boolean isShown);
 	
 	public int updateNews(Map<String,String> tag,String newsid);
+
+	public List<NewsBean> getAllNewsInfo(int i, int j,String tag,boolean isShown);
+
 	
 }

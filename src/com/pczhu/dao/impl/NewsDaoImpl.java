@@ -44,10 +44,19 @@ public class NewsDaoImpl implements NewsDaoInterface {
 				while(iterator.hasNext()){
 					String key = iterator.next();
 					String value = tag.get(key);
-					beanListResult = queryRunner.query(conn,"select * from newsinfodata where "+key+" = ?", new BeanListHandler<NewsBean>(NewsBean.class),value);
+					beanListResult = queryRunner.query(conn,"select * from newsinfodata where "+key+" = ? order by newsID desc", new BeanListHandler<NewsBean>(NewsBean.class),value);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
+		}finally{
+			try {
+				if(conn != null){
+					conn.close();
+					conn = null;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	
 		return beanListResult;
@@ -63,6 +72,15 @@ public class NewsDaoImpl implements NewsDaoInterface {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return i;
+		}finally{
+			try {
+				if(conn != null){
+					conn.close();
+					conn = null;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return i;
 	}
@@ -88,7 +106,8 @@ public class NewsDaoImpl implements NewsDaoInterface {
 					+ "newslight,"
 					+ "newsimgurl,"
 					+ "newscontentimgurl,"
-					+ "newshints) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 
+					+ "newsUserID,"
+					+ "newshints) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 
 					news.getNewscontent(),
 					news.getNewstitle(),
 					news.getClassTag(),
@@ -102,9 +121,19 @@ public class NewsDaoImpl implements NewsDaoInterface {
 					news.getNewslight(),
 					news.getNewsimgurl(),
 					news.getNewscontentimgurl(),
+					news.getNewsUserID(),
 					0);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally{
+			try {
+				if(conn != null){
+					conn.close();
+					conn = null;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return i;
 	}
@@ -112,17 +141,42 @@ public class NewsDaoImpl implements NewsDaoInterface {
 
 
 	@Override
-	public List<NewsBean> getAllNewsInfo() {
+	public List<NewsBean> getAllNewsInfo(String tag,boolean isShown) {
 		List<NewsBean> allbeanListResult = null;
 		conn = DBPool.getConnection();  
-		  
+		 System.out.println("抓全部开始");
 	    QueryRunner queryRunner = new QueryRunner();  
 		try {
-			allbeanListResult = queryRunner.query(conn,"select * from newsinfodata", new BeanListHandler<NewsBean>(NewsBean.class));
+			if("0".equals(tag)){
+				if(isShown){
+					
+					allbeanListResult = queryRunner.query(conn,"select * from newsinfodata where newsshow = 1 order by newsID desc", new BeanListHandler<NewsBean>(NewsBean.class));
+				}else{
+					allbeanListResult = queryRunner.query(conn,"select * from newsinfodata order by newsID desc", new BeanListHandler<NewsBean>(NewsBean.class));
+					
+				}
+			}else{
+				if(isShown){
+					
+					allbeanListResult = queryRunner.query(conn,"select * from newsinfodata where classTag = ? and newsshow = 1 order by newsID desc", new BeanListHandler<NewsBean>(NewsBean.class),tag);
+				}else{
+					allbeanListResult = queryRunner.query(conn,"select * from newsinfodata where classTag = ? order by newsID desc", new BeanListHandler<NewsBean>(NewsBean.class),tag);
+					
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally{
+			try {
+				if(conn != null){
+					conn.close();
+					conn = null;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-	
+		 System.out.println("抓全部完毕");
 		return allbeanListResult;
 	}
 
@@ -142,8 +196,58 @@ public class NewsDaoImpl implements NewsDaoInterface {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return i;
+		}finally{
+			try {
+				if(conn != null){
+					conn.close();
+					conn = null;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return i;
+	}
+
+	@Override
+	public List<NewsBean> getAllNewsInfo(int i, int j,String tag,boolean isShown) {
+		 System.out.println("抓分页开始");
+		List<NewsBean> allbeanListResult = null;
+		conn = DBPool.getConnection();  
+		  
+	    QueryRunner queryRunner = new QueryRunner();  
+		try {
+			if("0".equals(tag)){
+				if(isShown){
+					
+					allbeanListResult = queryRunner.query(conn,"select * from newsinfodata where newsshow = 1 order by newsID desc limit ?,? ", new BeanListHandler<NewsBean>(NewsBean.class),i,j);
+				}else{
+					
+					allbeanListResult = queryRunner.query(conn,"select * from newsinfodata order by newsID desc limit ?,? ", new BeanListHandler<NewsBean>(NewsBean.class),i,j);
+				}
+			}else{
+				if(isShown){
+					allbeanListResult = queryRunner.query(conn,"select * from newsinfodata where classTag = ? and  newsshow = 1 order by newsID desc limit ?,? ", new BeanListHandler<NewsBean>(NewsBean.class),tag,i,j);
+					
+				}else{
+					allbeanListResult = queryRunner.query(conn,"select * from newsinfodata where classTag = ? order by newsID desc limit ?,? ", new BeanListHandler<NewsBean>(NewsBean.class),tag,i,j);
+					
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				if(conn != null){
+					conn.close();
+					conn = null;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		 System.out.println("抓分页完毕");
+		return allbeanListResult;
 	}
 
 

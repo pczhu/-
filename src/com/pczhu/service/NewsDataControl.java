@@ -27,8 +27,18 @@ public class NewsDataControl {
 		}
 	}
 	public List<NewsBean> getAllNews(){
+		return newsdao.getAllNewsInfo("0",false);
 		
-		return newsdao.getAllNewsInfo();
+	}
+	public List<NewsBean> getAllNews(int i,int j,String tag){
+		if(j != 0){
+			System.out.println("抓分页");
+			return newsdao.getAllNewsInfo(i,j,tag,true);
+		}else{
+			System.out.println("抓全部");
+			return newsdao.getAllNewsInfo(tag,true);
+		}
+		
 	}
 	public int deleteNews(String id){
 		return newsdao.delNewsInfo(id);

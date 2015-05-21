@@ -52,6 +52,9 @@ public class NesFilter implements Filter {
 
 		 if("/ZhuNewsManager/addNews.jsp".equals(currentPath)){
 			UserBean users = (UserBean) request.getSession().getAttribute("logininfo");
+			if(users == null){
+				return false;
+			}
 			String username = users.getUserName();
 			String userpassword = users.getUserPassword();
 			UserDaoInterface userDaoInterface = new UserDaoImpl();

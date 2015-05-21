@@ -64,6 +64,14 @@
     <display-name>AddNews</display-name>
     <servlet-name>AddNews</servlet-name>
     <servlet-class>com.pczhu.servlet.AddNews</servlet-class>
+    <init-param>
+      <param-name>filepath</param-name>
+      <param-value>uploadFile</param-value>
+    </init-param>
+    <init-param>
+      <param-name>temppath</param-name>
+      <param-value>temp</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>AddNews</servlet-name>
@@ -164,5 +172,15 @@
   <servlet-mapping>
     <servlet-name>DelUsers</servlet-name>
     <url-pattern>/delusers</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetPic</display-name>
+    <servlet-name>GetPic</servlet-name>
+    <servlet-class>com.pczhu.servlet.GetPic</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetPic</servlet-name>
+    <url-pattern>/getPic</url-pattern>
   </servlet-mapping>
 </web-app>
