@@ -17,10 +17,10 @@
 		
 		${sessionScope.logininfo.userName}
 		<a href="/ZhuNewsManager/logout">退出</a>
-		<a href="/ZhuNewsManager/addNews.jsp">发布新闻</a>
+		<a href="/ZhuNewsManager/forwardJsp?target=addNews.jsp">发布新闻</a>
 		<a href="/ZhuNewsManager/shownews">显示新闻</a>
 		<c:if test="${sessionScope.logininfo.userPower == 2}">
-			<a href="/ZhuNewsManager/register.jsp">注册发布账号</a>
+			<a href="/ZhuNewsManager/forwardJsp?target=register.jsp">注册发布账号</a>
 			<a href="/ZhuNewsManager/showusers">显示新闻管理员列表</a>
 		</c:if>
 

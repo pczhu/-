@@ -183,4 +183,14 @@
     <servlet-name>GetPic</servlet-name>
     <url-pattern>/getPic</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ForwardJsp</display-name>
+    <servlet-name>ForwardJsp</servlet-name>
+    <servlet-class>com.pczhu.servlet.ForwardJsp</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ForwardJsp</servlet-name>
+    <url-pattern>/forwardJsp</url-pattern>
+  </servlet-mapping>
 </web-app>

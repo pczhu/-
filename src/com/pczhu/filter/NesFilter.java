@@ -42,7 +42,7 @@ public class NesFilter implements Filter {
 	
 	private boolean checkuser(HttpServletRequest request, HttpServletResponse response) {
 		 String currentPath = request.getRequestURI();
-		 if("/ZhuNewsManager/register.jsp".equals(currentPath)){
+		 if("/ZhuNewsManager//register".equals(currentPath)){
 /*			 if(){
 				 
 			 }else{
@@ -50,7 +50,7 @@ public class NesFilter implements Filter {
 			 }*/
 		 }
 
-		 if("/ZhuNewsManager/addNews.jsp".equals(currentPath)){
+		 if("/ZhuNewsManager/addNews".equals(currentPath)){
 			UserBean users = (UserBean) request.getSession().getAttribute("logininfo");
 			if(users == null){
 				return false;

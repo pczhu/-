@@ -17,7 +17,7 @@ function gotodel(n) {
 	欢迎
 	<c:choose>
 		<c:when test="${sessionScope.logininfo == null}">
-			<button value="管理员登陆" onclick="window.location.href='login.jsp'"></button>
+			<button value="管理员登陆" onclick="window.location.href='/ZhuNewsManager/forwardJsp?target=login.jsp'"></button>
 		</c:when>
 		<c:otherwise>
 		

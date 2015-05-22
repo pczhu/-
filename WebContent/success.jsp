@@ -17,7 +17,7 @@
 	setInterval("redirect()", 1000);
 	function redirect() {
 		if (second < 0) {
-			location.href = '/ZhuNewsManager/addNews.jsp';
+			location.href = '/ZhuNewsManager/forwardJsp?target=addNews.jsp';
 		} else {
 			if (navigator.appName.indexOf("Explorer") > -1) {
 				document.getElementById('totalSecond').innerText = second--;
