@@ -1,4 +1,4 @@
-package com.pczhu.dao.impl;
+package com.pczhu.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -7,8 +7,9 @@ import com.pczhu.bean.ImageInfo;
 
 public interface PicDaoInterface {
 	public List<ImageInfo> getPicList(int i,int j);
-	public int delpic(int id);
+	public List<ImageInfo> getPicList();
+	public int delpic(String id);
 	public int addpic(ImageInfo imageinfo);
-	public int checkshow(int id);
-	public int updateImage(int id,Map<String,String> map);
+	public int checkshow(String id);
+	public int updateImage(String id,Map<String,String> map);
 }

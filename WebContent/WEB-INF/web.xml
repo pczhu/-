@@ -193,4 +193,52 @@
     <servlet-name>ForwardJsp</servlet-name>
     <url-pattern>/forwardJsp</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddPics</display-name>
+    <servlet-name>AddPics</servlet-name>
+    <servlet-class>com.pczhu.servlet.AddPics</servlet-class>
+    <init-param>
+      <param-name>filepath</param-name>
+      <param-value>uploadFile</param-value>
+    </init-param>
+    <init-param>
+      <param-name>temppath</param-name>
+      <param-value>temp</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddPics</servlet-name>
+    <url-pattern>/addPics</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Showpics</display-name>
+    <servlet-name>Showpics</servlet-name>
+    <servlet-class>com.pczhu.servlet.Showpics</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Showpics</servlet-name>
+    <url-pattern>/showpics</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeletePic</display-name>
+    <servlet-name>DeletePic</servlet-name>
+    <servlet-class>com.pczhu.servlet.DeletePic</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeletePic</servlet-name>
+    <url-pattern>/deletepic</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CanshowPic</display-name>
+    <servlet-name>CanshowPic</servlet-name>
+    <servlet-class>com.pczhu.servlet.CanshowPic</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CanshowPic</servlet-name>
+    <url-pattern>/canshowPic</url-pattern>
+  </servlet-mapping>
 </web-app>

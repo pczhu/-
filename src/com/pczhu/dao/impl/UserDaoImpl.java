@@ -18,6 +18,10 @@ public class UserDaoImpl implements UserDaoInterface {
 	private Connection conn;
 	@Override
 	public boolean register(UserBean user) {
+		if(getOneWord(user.getUserName()) == -1){
+			return false;
+		}
+		
 		conn = DBPool.getConnection();  
 //		userid	int(8)			��		auto_increment	 Browse distinct values	 ���	 ɾ��	 ����	 Ψһ	 ����	ȫ������
 //		userName	varchar(64)	utf8_general_ci		��			 Browse distinct values	 ���	 ɾ��	 ����	 Ψһ	 ����	ȫ������
@@ -105,6 +109,30 @@ public class UserDaoImpl implements UserDaoInterface {
 			e.printStackTrace();
 		}
 		return allbeanListResult;
+	}
+	public int getOneWord(String name){
+		conn = DBPool.getConnection();  
+		NewsBean newbean = null;
+	    QueryRunner queryRunner = new QueryRunner();  
+		try {
+			newbean = queryRunner.query(conn,"select * from newsinfodata where userName = ?", new BeanHandler<NewsBean>(NewsBean.class),name);
+	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				if(conn != null){
+					conn.close();
+					conn = null;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		 if(newbean != null){
+			 return -1;
+		 }
+		return 0;
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.pczhu.bean.NewsBean;
@@ -246,9 +247,10 @@ public class NewsDaoImpl implements NewsDaoInterface {
 				e.printStackTrace();
 			}
 		}
-		 System.out.println("抓分页完毕");
+		System.out.println("抓分页完毕");
 		return allbeanListResult;
 	}
+
 
 
 

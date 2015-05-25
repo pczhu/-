@@ -6,6 +6,9 @@ public class ImageInfo {
 	private String picurl;
 	private int width;
 	private int height;
+	private String uid;
+	private String pictime;
+	private String checkok;
 	public String getPid() {
 		return pid;
 	}
@@ -35,6 +38,24 @@ public class ImageInfo {
 	}
 	public void setHeight(int height) {
 		this.height = height;
+	}
+	public String getUid() {
+		return uid;
+	}
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+	public String getPictime() {
+		return pictime;
+	}
+	public void setPictime(String pictime) {
+		this.pictime = pictime;
+	}
+	public String getCheckok() {
+		return checkok;
+	}
+	public void setCheckok(String checkok) {
+		this.checkok = checkok;
 	}
 
 	

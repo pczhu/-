@@ -16,7 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.pczhu.bean.ImageInfo;
 import com.pczhu.bean.NewsBean;
-import com.pczhu.service.ImageControl;
+import com.pczhu.service.PicControl;
 import com.pczhu.service.NewsDataControl;
 
 /**
@@ -25,7 +25,7 @@ import com.pczhu.service.NewsDataControl;
 public class GetPic extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private JSONArray imageinfolist;
-	private ImageControl imageControl;
+	private PicControl imageControl;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -51,9 +51,9 @@ public class GetPic extends HttpServlet {
 
 	private void getData(HttpServletRequest request,HttpServletResponse response) {
 		 	response.setCharacterEncoding("utf-8");
-		    imageControl = new ImageControl();
-		    String pageSize = request.getParameter("pageSize");
-		    String toPageNo = request.getParameter("toPageNo");
+		    imageControl = new PicControl();
+		    String pageSize = "10";
+		    String toPageNo = request.getParameter("currentPage");
 
 		    System.out.println("第一步：页"+toPageNo+"每页大小:"+pageSize);
 		    if(!StringUtils.isEmpty(pageSize) && !StringUtils.isEmpty(toPageNo)){
