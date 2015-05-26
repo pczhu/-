@@ -44,7 +44,7 @@ public class Login extends HttpServlet {
 			if(userinfo != null){
 				request.getSession().removeAttribute("loginerror");
 				request.getSession().setAttribute("logininfo", userinfo);
-				response.sendRedirect("welcome.jsp");
+				response.sendRedirect("index.jsp");
 			}else{
 				request.getSession().setAttribute("loginerror", "登陆信息错误，请重新登陆");
 				response.sendRedirect("login.jsp");

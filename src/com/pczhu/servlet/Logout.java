@@ -32,7 +32,7 @@ public class Logout extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().removeAttribute("logininfo");
-		response.sendRedirect("welcome.jsp");
+		response.sendRedirect("login.jsp");
 	}
 
 }
