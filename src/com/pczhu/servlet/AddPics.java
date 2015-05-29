@@ -136,7 +136,8 @@ public class AddPics extends HttpServlet {
 		if (flag != false) {
 			UserDaoInterface userDaoInterface = new UserDaoImpl();
 			userbean = userDaoInterface.getVaildUser(username, userPassword);
-			uid = userbean.getUserid() + "";
+			if(userbean!=null)
+				uid = userbean.getUserid() + "";
 			
 		}
 		// NewsBean news = receivedata(request, response);
@@ -153,10 +154,12 @@ public class AddPics extends HttpServlet {
 			flag = false;
 		}
 		if (!flag) {
-			response.sendRedirect("failed.jsp");
+			request.getSession().setAttribute("addpicresult", "添加失败请重新检查并录入");
 		} else {
-			response.sendRedirect("success.jsp");
+			request.getSession().setAttribute("addpicresult", "添加成功");
 		}
+		request.getSession().setAttribute("code", 3);
+		response.sendRedirect("welcome.jsp");
 		return;
 
 	}

@@ -37,7 +37,8 @@ public class DelUsers extends HttpServlet {
 		String userid = request.getParameter("userid");
 		UserControl userControl = new UserControl();
 		int i = userControl.delUser(userid);
-		response.sendRedirect("/ZhuNewsManager/showusers");
+		//response.sendRedirect("/ZhuNewsManager/showusers");
+		request.getRequestDispatcher("showusers").forward(request, response);
 		
 	}
 

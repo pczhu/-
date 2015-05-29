@@ -37,6 +37,7 @@ public class NesFilter implements Filter {
         	chain.doFilter(request, response);
         }else{
         	request.getSession().setAttribute("error", "权限错误");
+        	response.sendRedirect("login.jsp");
         }
 	}
 	
@@ -50,7 +51,8 @@ public class NesFilter implements Filter {
 			 }*/
 		 }
 
-		 if("/ZhuNewsManager/addNews".equals(currentPath)){
+		 if("/ZhuNewsManager/addNews".equals(currentPath) || "/ZhuNewsManager/welcome.jsp".equals(currentPath) || "/ZhuNewsManager/forwardJsp".equals("currentPath")
+				 || "/ZhuNewsManager/showusers".equals(currentPath) || "/ZhuNewsManager/shownews".equals(currentPath) ||  "/ZhuNewsManager/showpic".equals(currentPath)){
 			UserBean users = (UserBean) request.getSession().getAttribute("logininfo");
 			if(users == null){
 				return false;

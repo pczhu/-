@@ -8,6 +8,7 @@ import com.pczhu.bean.ImageInfo;
 public interface PicDaoInterface {
 	public List<ImageInfo> getPicList(int i,int j);
 	public List<ImageInfo> getPicList();
+	public List<ImageInfo> getPicList(Map<String,String> map);
 	public int delpic(String id);
 	public int addpic(ImageInfo imageinfo);
 	public int checkshow(String id);

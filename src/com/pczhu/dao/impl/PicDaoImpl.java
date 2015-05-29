@@ -111,7 +111,7 @@ public class PicDaoImpl implements PicDaoInterface {
 			while(iterator.hasNext()){
 				String key = iterator.next();
 				String value = map.get(key);
-				i = queryRunner.update(conn,"update picdata set "+key+" = ? where pid = ?",value,id);
+				i = queryRunner.update(conn,"update picdata set "+key+" = ? where pid = ? ",value,id);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -136,8 +136,36 @@ public class PicDaoImpl implements PicDaoInterface {
 		QueryRunner queryRunner = new QueryRunner();
 		try {
 
-			imagelist = queryRunner.query(conn, "select * from picdata",new BeanListHandler<ImageInfo>(ImageInfo.class));
+			imagelist = queryRunner.query(conn, "select * from picdata order by pid desc",new BeanListHandler<ImageInfo>(ImageInfo.class));
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+					conn = null;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return imagelist;
+	}
+
+	@Override
+	public List<ImageInfo> getPicList(Map<String, String> map) {
+
+
+		conn = DBPool.getConnection();
+		QueryRunner queryRunner = new QueryRunner();
+		Iterator<String> iterator = map.keySet().iterator();
+		try {
+			while(iterator.hasNext()){
+				String key = iterator.next();
+				String value = map.get(key);
+				imagelist = queryRunner.query(conn, "select * from picdata where "+key+" = ? order by pid desc",new BeanListHandler<ImageInfo>(ImageInfo.class),value);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

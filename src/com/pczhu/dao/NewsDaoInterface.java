@@ -18,6 +18,7 @@ public interface NewsDaoInterface {
 	public int updateNews(Map<String,String> tag,String newsid);
 
 	public List<NewsBean> getAllNewsInfo(int i, int j,String tag,boolean isShown);
-
+	
+	public NewsBean getNewsInfo(String id);
 	
 }

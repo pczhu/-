@@ -46,4 +46,7 @@ public class NewsDataControl {
 	public int canshow(Map<String,String> tag,String newsid){
 		return newsdao.updateNews(tag, newsid);
 	}
+	public NewsBean getNewsInfo(String id){
+		return newsdao.getNewsInfo(id);
+	}
 }

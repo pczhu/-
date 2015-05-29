@@ -24,6 +24,7 @@ public class NewsBean implements Serializable {
 	private String newscontentimgurl;
 	private int newshints;
 	private String newsUserID;
+	private String newsType;
 	public String getNewsID() {
 		return newsID;
 	}
@@ -122,6 +123,12 @@ public class NewsBean implements Serializable {
 	}
 	public void setNewsUserID(String newsUserID) {
 		this.newsUserID = newsUserID;
+	}
+	public String getNewsType() {
+		return newsType;
+	}
+	public void setNewsType(String newsType) {
+		this.newsType = newsType;
 	}
 
 

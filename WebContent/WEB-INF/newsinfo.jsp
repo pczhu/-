@@ -12,95 +12,7 @@
 <link rel="stylesheet" href="css/screen.css" />
 <script src="js/jquery.js"></script>
 <script src="js/jquery.validate.js"></script>
-<script type="text/javascript">
-	$()
-			.ready(
-					function() {
-						$("#addnewsform")
-								.validate(
-										{
-											rules : {
-												newstitle : {
-													required : true,
-													rangelength : [ 2, 15 ]
-												},
-												newsdesc : {
-													required : true,
-													rangelength : [ 5, 25 ]
-												},
-												newscontent : {
-													required : true,
-													minlength : 15,
-												},
 
-												newswriter : {
-													required : true,
-													minlength : 2
-												},
-												newsimgurl : "required",
-
-												newsusername : "required",
-												userpassword : "required",
-
-											},
-											messages : {
-												newstitle : {
-													required : "新闻标题不能为空",
-													rangelength : jQuery.validator
-															.format("请输入 一个长度介于 {0} 和 {1} 之间的标题"),
-												},
-												newsdesc : {
-													required : "简介不能为空",
-													rangelength : jQuery.validator
-															.format("请输入 一个长度介于 {0} 和 {1} 之间的简介"),
-												},
-												newscontent : {
-													required : "新闻内容不能为空",
-													minlength : jQuery.validator
-															.format("请输入 一个最小长度不小于{0}的字符串"),
-												},
-
-												newswriter : {
-													required : "新闻作者不能为空",
-													minlength : jQuery.validator
-															.format("请输入 一个最小长度不小于{0}的字符串"),
-												},
-												newsimgurl : "缩略图不能为空",
-
-												newsusername : "管理员账户不能为空",
-												userpassword : "不能为空",
-											}
-										});
-					});
-</script>
-<style>
-#commentForm {
-	width: 500px;
-}
-
-#commentForm label {
-	width: 250px;
-}
-
-#commentForm label.error, #commentForm input.submit {
-	margin-left: 253px;
-}
-
-#signupForm {
-	width: 670px;
-}
-
-#signupForm label.error {
-	margin-left: 10px;
-	width: auto;
-	display: inline;
-}
-
-#newsletter_topics label.error {
-	display: none;
-	margin-left: 103px;
-}
-</style>
 <script type="text/javascript">
 	function gotoDelete(n) {
 		var id = n.id;
@@ -207,76 +119,104 @@
 									<td bgcolor="#FFFFFF"
 										style="height: 490px; vertical-align: top; text-align: center;">
 										<div id="divone">
-
-											<form method="post" action="/ZhuNewsManager/addNews"
-												enctype="MULTIPART/FORM-DATA" id="addnewsform">
-												<table>
-													<tr>
-														<td>新闻标题</td>
-														<td><input type="text" name="newstitle"
-															id="newstitle"/></td>
-													</tr>
-													<tr>
-														<td>新闻描述</td>
-														<td><input type="text" name="newsdesc" id="newsdesc"/></td>
-													</tr>
-													<tr>
-														<td>新闻内容</td>
-														<td><textarea rows="5" cols="60" name="newscontent"
-																id="newscontent"></textarea></td>
-													</tr>
-													<tr>
-														<td>新闻分类</td>
-														<td><select name="newsclasstag" id="newsclasstag">
-																<option value="1" selected="selected">头条</option>
-																<option value="2">军事</option>
-																<option value="3">娱乐</option>
-																<option value="4">体育</option>
-																<option value="5">财经</option>
-																<option value="6">科技</option>
-																<option value="7">段子</option>
-																<option value="8">时尚</option>
-														</select></td>
-													</tr>
+										<c:if test="${sessionScope.newsbeandetail!=null }">
+											   <table border="1" align="left">
 
 													<tr>
-														<td>作者</td>
-														<td><input type="text" name="newswriter"
-															id="newswriter"/></td>
+														<td background="images/index1_72.gif" bgcolor="#FFFFFF">
+														新闻标题
+														</td>
+														<td>
+														${sessionScope.newsbeandetail.newsuserName}
+														</td>
 													</tr>
 													<tr>
-														<td>索引图</td>
-														<td><input type="file" name="newsimgurl"
-															id="newsimgurl"/></td>
+														<td background="images/index1_72.gif" bgcolor="#FFFFFF">
+														新闻作者
+														</td>
+														<td>
+														${sessionScope.newsbeandetail.newswriter}
+														</td>
 													</tr>
 													<tr>
-														<td>新闻大图</td>
-														<td><input type="file" name="newscontentimgurl"
-															id="newscontentimgurl"/></td>
+														<td background="images/index1_72.gif" bgcolor="#FFFFFF">
+														新闻发布人
+														</td>
+														<td>
+														${sessionScope.newsbeandetail.newsuserName}
+														</td >
 													</tr>
 													<tr>
-														<td>新闻来源</td>
-														<td><input type="text" name="newssource"
-															id="newssource"/></td>
+														<td background="images/index1_72.gif" bgcolor="#FFFFFF">
+														新闻来源
+														</td>
+														<td>
+														${sessionScope.newsbeandetail.newssource}
+														</td>
 													</tr>
 													<tr>
-														<td>发布管理员</td>
-														<td><input type="text" name="newsusername"
-															id="newsusername"/></td>
+														<td background="images/index1_72.gif" bgcolor="#FFFFFF">
+														新闻时间
+														</td>
+														<td>
+														${sessionScope.newsbeandetail.newsdateTime}
+														</td>
 													</tr>
 													<tr>
-														<td>管理员密码</td>
-														<td><input type="password" name="userpassword"
-															id="userpassword"/></td>
+														<td background="images/index1_72.gif" bgcolor="#FFFFFF">
+														新闻类型
+														</td>
+														<td>
+														${sessionScope.newsbeandetail.newsType}
+														</td>
 													</tr>
+													<tr>
+														<td background="images/index1_72.gif" bgcolor="#FFFFFF">
+														新闻简介
+														</td>
+														<td width="50%">
+														<span  >${sessionScope.newsbeandetail.newsdesc}</span>
+														
+														</td>
+													</tr>
+													<tr>
+														<td background="images/index1_72.gif" bgcolor="#FFFFFF">
+														新闻内容
+														</td>
+														<td width="50%">
+														<span  >${sessionScope.newsbeandetail.newscontent}</span>
+														
+														</td>
+													</tr>
+													<tr>
+													<td background="images/index1_72.gif" bgcolor="#FFFFFF">审核状态</td>
+													<td height="26" align="center" bgcolor="#FFFFFF">
+													<c:choose>
+														<c:when test="${sessionScope.newsbeandetail.newscheckup == 1}">
+															审核通过
+														</c:when>
+															<c:otherwise>
+															未审核通过
+															</c:otherwise>
+													</c:choose>
+													</td>
+													</tr>
+													<tr>
+													<td height="26" align="center" bgcolor="#FFFFFF">
+														<img src="images/index_del.gif" alt="images/index_del.gif" id="${sessionScope.newsbeandetail.newsID}" onclick="gotoDelete(this)" />
+													</td>
+													<c:if test="${sessionScope.logininfo.userPower == 2}">
+														<td height="26" align="center" bgcolor="#FFFFFF">
+															<img src="images/index_pass.gif" alt="images/index_pass.gif" id="${sessionScope.newsbeandetail.newsID}" name="tongguo" onclick="gotoshow(this)" />
+														</td>
+													</c:if>
+												</tr>
+												</table>		
+										
+										</c:if>
 
-												</table>
-												<input type="submit" name="submit" id="send" value="确认提交"/>
-													<input type="submit" name="reset" id="reset" value="全部重写"/>
-											</form>
 										</div>
 									</td>
-									<td background="images/index1_47.gif"></td>
 								</tr>
 								<tr>
 									<td width="8" height="8"><img src="images/index1_91.gif"

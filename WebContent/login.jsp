@@ -124,15 +124,15 @@ window.attachEvent("onload", correctPNG);
                   <td height="198" align="right" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td width="35%">&nbsp;</td>
-                      <td height="25" colspan="2" class="left_txt"><p>1- 卓越的技术团队  </p></td>
+                      <td height="25" colspan="2" class="left_txt"><p align="center">1- 卓越的技术团队  </p></td>
                     </tr>
                     <tr>
                       <td>&nbsp;</td>
-                      <td height="25" colspan="2" class="left_txt"><p>2- 一流的技术水平</p></td>
+                      <td height="25" colspan="2" class="left_txt"><p align="center">2- 一流的技术水平</p></td>
                     </tr>
                     <tr>
                       <td>&nbsp;</td>
-                      <td height="25" colspan="2" class="left_txt"><p>3- 强大的后台系统</p></td>
+                      <td height="25" colspan="2" class="left_txt"><p align="center">3- 强大的后台系统</p></td>
                     </tr>
 
                   </table></td>

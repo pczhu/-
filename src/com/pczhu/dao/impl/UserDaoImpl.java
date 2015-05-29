@@ -23,12 +23,6 @@ public class UserDaoImpl implements UserDaoInterface {
 		}
 		
 		conn = DBPool.getConnection();  
-//		userid	int(8)			��		auto_increment	 Browse distinct values	 ���	 ɾ��	 ����	 Ψһ	 ����	ȫ������
-//		userName	varchar(64)	utf8_general_ci		��			 Browse distinct values	 ���	 ɾ��	 ����	 Ψһ	 ����	ȫ������
-//		userPassword	varchar(200)	utf8_general_ci		��			 Browse distinct values	 ���	 ɾ��	 ����	 Ψһ	 ����	ȫ������
-//		registerTime	varchar(12)	utf8_general_ci		��			 Browse distinct values	 ���	 ɾ��	 ����	 Ψһ	 ����	ȫ������
-//		uuid	varchar(64)	utf8_general_ci		��			 Browse distinct values	 ���	 ɾ��	 ����	 Ψһ	 ����	ȫ������
-//		userPower
 	    QueryRunner queryRunner = new QueryRunner();  
 	    int i = 0;
 		try {
@@ -115,7 +109,7 @@ public class UserDaoImpl implements UserDaoInterface {
 		NewsBean newbean = null;
 	    QueryRunner queryRunner = new QueryRunner();  
 		try {
-			newbean = queryRunner.query(conn,"select * from newsinfodata where userName = ?", new BeanHandler<NewsBean>(NewsBean.class),name);
+			newbean = queryRunner.query(conn,"select * from users where userName = ?", new BeanHandler<NewsBean>(NewsBean.class),name);
 	
 		} catch (SQLException e) {
 			e.printStackTrace();

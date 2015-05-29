@@ -108,7 +108,8 @@ public class NewsDaoImpl implements NewsDaoInterface {
 					+ "newsimgurl,"
 					+ "newscontentimgurl,"
 					+ "newsUserID,"
-					+ "newshints) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 
+					+ "newsType,"
+					+ "newshints) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 
 					news.getNewscontent(),
 					news.getNewstitle(),
 					news.getClassTag(),
@@ -123,6 +124,7 @@ public class NewsDaoImpl implements NewsDaoInterface {
 					news.getNewsimgurl(),
 					news.getNewscontentimgurl(),
 					news.getNewsUserID(),
+					news.getNewsType(),
 					0);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -249,6 +251,31 @@ public class NewsDaoImpl implements NewsDaoInterface {
 		}
 		System.out.println("抓分页完毕");
 		return allbeanListResult;
+	}
+
+	@Override
+	public NewsBean getNewsInfo(String id) {
+		conn = DBPool.getConnection();  
+		NewsBean newsbean = null;
+	    QueryRunner queryRunner = new QueryRunner();  
+		try {
+				
+			newsbean = queryRunner.query(conn,"select * from newsinfodata where newsid = ?", new BeanHandler<NewsBean>(NewsBean.class),id);
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+		}finally{
+			try {
+				if(conn != null){
+					conn.close();
+					conn = null;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	
+		return newsbean;
 	}
 
 

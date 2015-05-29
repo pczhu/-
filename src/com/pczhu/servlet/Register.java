@@ -48,11 +48,18 @@ public class Register extends HttpServlet {
 			userbean.setUuid(MD5Utils.toMD5(userbean.getUserName()+userbean.getRegisterTime()));
 			RegisterControl registerControl = new RegisterControl();
 			boolean result = registerControl.register(userbean);
-			if(result){
-				response.sendRedirect("success.jsp");
+
+			if (!result) {
+				request.getSession().setAttribute("addmemresult", "添加失败请重新检查并录入");
+			} else {
+				request.getSession().setAttribute("addmemresult", "添加成功");
 			}
+			request.getSession().setAttribute("code", 4);
+			response.sendRedirect("welcome.jsp");
 		}else{
-			
+			request.getSession().setAttribute("addmemresult", "添加失败请重新检查并录入");
+			request.getSession().setAttribute("code", 4);
+			response.sendRedirect("welcome.jsp");
 		}
 		
 	}

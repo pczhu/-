@@ -127,21 +127,25 @@ public class AddNews extends HttpServlet {
 		if(flag != false){
 			UserDaoInterface userDaoInterface = new UserDaoImpl();
 			userbean = userDaoInterface.getVaildUser(news.getNewsuserName(), userPassword);
-			newsuserid = userbean.getUserid()+"";
-			news.setNewsUserID(newsuserid);
-			news.setNewsdateTime(TimeUtils.getFormatTime("yyyy-MM-dd HH:mm:ss", new Date()));
+			if (userbean != null) {
+				newsuserid = userbean.getUserid()+"";
+				news.setNewsUserID(newsuserid);
+				news.setNewsdateTime(TimeUtils.getFormatTime("yyyy-MM-dd HH:mm:ss", new Date()));
+				flag = newsdatacontrol.addNews(news);
+			}else{
+				flag = false;
+			}
 		}
 		//NewsBean news = receivedata(request, response);
-		if (userbean != null) {
-			flag = newsdatacontrol.addNews(news);
-		} else {
-			flag = false;
-		}
 		if (!flag) {
-			response.sendRedirect("failed.jsp");
+			request.getSession().setAttribute("addnewsresult", "添加失败请检查并重新录入");
 		} else {
-			response.sendRedirect("success.jsp");
+			request.getSession().setAttribute("addnewsresult", "添加成功");
 		}
+		request.getSession().setAttribute("code",2);
+		String target ="welcome.jsp";
+		//request.getRequestDispatcher(target).forward(request, response);
+		response.sendRedirect(target);
 		return;
 
 	}
@@ -161,6 +165,7 @@ public class AddNews extends HttpServlet {
 			news.setNewscontent(value);
 		}else if("newsclasstag".equals(name)){
 			news.setClassTag(value);
+			setType(value);
 		}else if("newswriter".equals(name)){
 			news.setNewswriter(value);
 		}else if("newsusername".equals(name)){
@@ -174,21 +179,48 @@ public class AddNews extends HttpServlet {
 		System.out.println(name + " : " + value + "\r\n");
 	}
 
+	private void setType(String value) {
+		if("1".equals(value)){
+			news.setNewsType("头条");
+		}else if("2".equals(value)){
+			news.setNewsType("军事");
+		}else if("3".equals(value)){
+			news.setNewsType("娱乐");
+		}else if("4".equals(value)){
+			news.setNewsType("体育");
+		}else if("5".equals(value)){
+			news.setNewsType("财经");
+		}else if("6".equals(value)){
+			news.setNewsType("科技");
+		}else if("7".equals(value)){
+			news.setNewsType("段子");
+		}else if("8".equals(value)){
+			news.setNewsType("时尚");
+		}
+		
+	}
+
 	// 处理上传的文件
 	private void processUploadFile(FileItem item)
 			throws Exception {
 		filename = item.getName();
 		System.out.println("完整的文件名：" + filename);
+		if ("".equals(filename)) {
+			System.out.println("文件名为空 ...");
+			if(item.getFieldName().equals("newscontentimgurl")){
+				news.setNewscontentimgurl("");
+			}
+			return;
+		}
 		int index = filename.lastIndexOf("\\");
 		filename = filename.substring(index + 1, filename.length());
 		String endstr = filename.substring(filename.indexOf("."));
 		filename = MD5Utils.toMD5(filename+new Date().getTime())+endstr;
 		long fileSize = item.getSize();
-
-		if ("".equals(filename) && fileSize == 0) {
-			System.out.println("文件名为空 ...");
+		if (fileSize == 0) {
 			return;
 		}
+
 		if(item.getFieldName().equals("newsimgurl")){
 			news.setNewsimgurl("http://"+IPUtils.getLocalIP()+webname+"/"+filePathsource+"/"+filename);
 		}else if(item.getFieldName().equals("newscontentimgurl")){
