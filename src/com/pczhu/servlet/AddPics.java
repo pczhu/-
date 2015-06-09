@@ -92,11 +92,7 @@ public class AddPics extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		// response.setContentType("text/html;charset=utf-8");
-		// response.setContentType("text/plain;charset=utf-8");
-		// response.setCharacterEncoding("utf-8");
 
-		// FileItem.getString("utf-8");
 		webname = request.getContextPath();
 		imageinfo = new ImageInfo();
 		imageinfo.setCheckok("0");
@@ -107,7 +103,6 @@ public class AddPics extends HttpServlet {
 			diskFactory.setSizeThreshold(4 * 1024);
 			// repository 贮藏室，即临时文件目录
 			diskFactory.setRepository(new File(tempPath));
-
 			ServletFileUpload upload = new ServletFileUpload(diskFactory);
 			// 设置允许上传的最大文件大小 4M
 			upload.setSizeMax(4 * 1024 * 1024);
@@ -116,7 +111,6 @@ public class AddPics extends HttpServlet {
 			Iterator iter = fileItems.iterator();
 			while (iter.hasNext()) {
 				FileItem item = (FileItem) iter.next();
-
 				if (item.isFormField()) {
 					System.out.println("处理表单内容 ...");
 					processFormField(item);
@@ -138,9 +132,7 @@ public class AddPics extends HttpServlet {
 			userbean = userDaoInterface.getVaildUser(username, userPassword);
 			if(userbean!=null)
 				uid = userbean.getUserid() + "";
-			
 		}
-		// NewsBean news = receivedata(request, response);
 		if (userbean != null) {
 			imageControl = new PicControl();
 			imageinfo.setUid(uid);
@@ -163,7 +155,6 @@ public class AddPics extends HttpServlet {
 		return;
 
 	}
-
 	// 处理表单内容
 	private void processFormField(FileItem item) throws Exception {
 		String name = item.getFieldName();
@@ -216,7 +207,6 @@ public class AddPics extends HttpServlet {
 
 		width = bi.getWidth(); // 像素
 		height = bi.getHeight(); // 像素
-
 		System.out.println("width=" + width + ",height=" + height + "." + "title="+pictitle+".");
 
 	}

@@ -70,9 +70,7 @@ public class AddNews extends HttpServlet {
 		// 从配置文件中获得初始化参数
 		filePathsource = config.getInitParameter("filepath");
 		tempPathsource = config.getInitParameter("temppath");
-
 		ServletContext context = getServletContext();
-
 		filePath = context.getRealPath(filePathsource);
 		tempPath = context.getRealPath(tempPathsource);
 		System.out.println("文件存放目录、临时文件目录准备完毕 ...");
@@ -85,11 +83,6 @@ public class AddNews extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-//		response.setContentType("text/html;charset=utf-8");
-//		response.setContentType("text/plain;charset=utf-8");
-//		response.setCharacterEncoding("utf-8");
-		 
-		//FileItem.getString("utf-8");
 		webname = request.getContextPath();
 		news = new NewsBean();
 		try {
@@ -98,7 +91,6 @@ public class AddNews extends HttpServlet {
 			diskFactory.setSizeThreshold(4 * 1024);
 			// repository 贮藏室，即临时文件目录
 			diskFactory.setRepository(new File(tempPath));
-
 			ServletFileUpload upload = new ServletFileUpload(diskFactory);
 			// 设置允许上传的最大文件大小 4M
 			upload.setSizeMax(4 * 1024 * 1024);
