@@ -269,10 +269,13 @@
 														<td><input type="password" name="userpassword"
 															id="userpassword"/></td>
 													</tr>
-
+													<tr>
+														<td>...</td>
+														<td><input type="submit" name="submit" id="send" value="确认提交"/>
+														<input type="reset" name="reset" id="reset" value="全部重写"/></td>
+													</tr>
 												</table>
-												<input type="submit" name="submit" id="send" value="确认提交"/>
-													<input type="submit" name="reset" id="reset" value="全部重写"/>
+
 											</form>
 										</div>
 									</td>

@@ -4,7 +4,7 @@
 		<property name="user">root</property>
 		<property name="password">root</property>
 		<property name="driverClass">com.mysql.jdbc.Driver</property>
-		<property name="jdbcUrl">jdbc:mysql://127.0.0.1:3306/newsclient?useUnicode=true&amp;characterEncoding=utf8
+		<property name="jdbcUrl">jdbc:mysql://127.0.0.1:3306/newsclient
 		</property>
 
 		<property name="initialPoolSize">10</property>
@@ -23,7 +23,7 @@
 		</property>
 		<property name="initialPoolSize">30</property>
 		<property name="maxIdleTime">30</property>
-		<property name="maxPoolSize">30</property>
+		<property name="maxPoolSize">100</property>
 		<property name="minPoolSize">10</property>
 	</named-config>
 </c3p0-config>
